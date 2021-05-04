@@ -19,32 +19,33 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Fusio\Adapter\Amqp\Tests\Connection;
+namespace Fusio\Adapter\Mqtt\Tests\Connection;
 
-use Fusio\Adapter\Amqp\Connection\Amqp;
+use Fusio\Adapter\Mqtt\Connection\Mqtt;
 use Fusio\Engine\Form\Builder;
 use Fusio\Engine\Form\Container;
 use Fusio\Engine\Form\Element\Input;
 use Fusio\Engine\Parameters;
 use Fusio\Engine\Test\EngineTestCaseTrait;
-use PhpAmqpLib\Connection\AMQPStreamConnection;
+//use PhpAmqpLib\Connection\AMQPStreamConnection;
+use PhpMqtt\Client;
 use PHPUnit\Framework\TestCase;
 
 /**
- * AmqpTest
+ * MqttTest
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-class AmqpTest extends TestCase
+class MqttTest extends TestCase
 {
     use EngineTestCaseTrait;
 
     public function testGetConnection()
     {
         /** @var Amqp $connectionFactory */
-        $connectionFactory = $this->getConnectionFactory()->factory(Amqp::class);
+        $connectionFactory = $this->getConnectionFactory()->factory(Mqtt::class);
 
         $config = new Parameters([
             'host'     => '127.0.0.1',
@@ -56,12 +57,12 @@ class AmqpTest extends TestCase
 
         $connection = $connectionFactory->getConnection($config);
 
-        $this->assertInstanceOf(AMQPStreamConnection::class, $connection);
+        $this->assertInstanceOf(MQTTClient::class, $connection);
     }
 
     public function testConfigure()
     {
-        $connection = $this->getConnectionFactory()->factory(Amqp::class);
+        $connection = $this->getConnectionFactory()->factory(Mqtt::class);
         $builder    = new Builder();
         $factory    = $this->getFormElementFactory();
 
@@ -80,8 +81,8 @@ class AmqpTest extends TestCase
 
     public function testPing()
     {
-        /** @var Amqp $connectionFactory */
-        $connectionFactory = $this->getConnectionFactory()->factory(Amqp::class);
+        /** @var Mqtt $connectionFactory */
+        $connectionFactory = $this->getConnectionFactory()->factory(Mqtt::class);
 
         $config = new Parameters([
             'host'     => '127.0.0.1',

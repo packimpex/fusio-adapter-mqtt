@@ -1,32 +1,32 @@
 {
-  "name": "fusio/adapter-amqp",
-  "description": "Provides a connection to work with a AMQP based message queue",
+  "name": "fusio/adapter-mqtt",
+  "description": "Provides a connection to work with a MQTT based message queue",
   "homepage": "http://fusio-project.org",
   "keywords": ["fusio-adapter"],
   "license": "AGPL-3.0",
   "authors": [
     {
-      "name": "Christoph Kappestein",
-      "email": "christoph.kappestein@gmail.com",
-      "homepage": "http://christoph.kappestein.com"
+      "name": "Tobias Soltermann",
+      "email": "tobias.soltermann@gmail.com",
+      "homepage": "http://tobiassoltermann.ch"
     }
   ],
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.4",
     "fusio/engine": "^4.0",
-    "php-amqplib/php-amqplib": "^2.6"
+    "php-mqtt/client": "^0.3.0"
   },
   "require-dev": {
     "phpunit/phpunit": "^8.0"
   },
   "autoload": {
     "psr-4": {
-      "Fusio\\Adapter\\Amqp\\": "src/"
+      "Fusio\\Adapter\\Mqtt\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Fusio\\Adapter\\Amqp\\Tests\\": "tests/"
+      "Fusio\\Adapter\\Mqtt\\Tests\\": "tests/"
     }
   }
 }

@@ -19,14 +19,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Fusio\Adapter\Amqp;
+namespace Fusio\Adapter\Mqtt;
 
 use Fusio\Engine\AdapterInterface;
 
 /**
  * Adapter
  *
- * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
+ * @author  Tobias Soltermann <tobias.soltermann@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */

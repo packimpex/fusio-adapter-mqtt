@@ -19,9 +19,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Fusio\Adapter\Amqp\Tests;
+namespace Fusio\Adapter\Mqtt\Tests;
 
-use Fusio\Adapter\Amqp\Connection\Amqp;
+use Fusio\Adapter\Mqtt\Connection\Mqtt;
 use Fusio\Engine\Model\Connection;
 use Fusio\Engine\Parameters;
 use Fusio\Engine\Test\CallbackConnection;
@@ -29,27 +29,27 @@ use Fusio\Engine\Test\EngineTestCaseTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
- * AmqpTestCase
+ * MqttTestCase
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-abstract class AmqpTestCase extends TestCase
+abstract class MqttTestCase extends TestCase
 {
     use EngineTestCaseTrait;
 
     protected static $hasConnection = true;
 
     /**
-     * @var \PhpAmqpLib\Connection\AMQPStreamConnection
+     * @var \PhpMqtt\Client
      */
     protected $connection;
 
     protected function setUp(): void
     {
         if (!self::$hasConnection) {
-            $this->markTestSkipped('AMQP connection not available');
+            $this->markTestSkipped('MQTT connection not available');
         }
 
         if (!$this->connection) {
@@ -71,15 +71,15 @@ abstract class AmqpTestCase extends TestCase
 
     protected function newConnection()
     {
-        $connector = new Amqp();
+        $connector = new Mqtt();
 
         try {
             $connection = $connector->getConnection(new Parameters([
                 'host'     => '127.0.0.1',
-                'port'     => 5672,
+                'port'     => 1883,
                 'user'     => 'guest',
                 'password' => 'guest',
-                'vhost'    => '/'
+                'topic'    => 'mytopic/test'
             ]));
 
             return $connection;

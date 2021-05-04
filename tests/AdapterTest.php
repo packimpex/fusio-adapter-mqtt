@@ -19,9 +19,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Fusio\Adapter\Amqp\Tests;
+namespace Fusio\Adapter\Mqtt\Tests;
 
-use Fusio\Adapter\Amqp\Adapter;
+use Fusio\Adapter\Mqtt\Adapter;
 use Fusio\Engine\Test\AdapterTestCase;
 
 /**
