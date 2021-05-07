@@ -57,7 +57,7 @@ class MqttTest extends TestCase
 
         $connection = $connectionFactory->getConnection($config);
 
-        $this->assertInstanceOf(MQTTClient::class, $connection);
+        $this->assertInstanceOf(MqttClient::class, $connection);
     }
 
     public function testConfigure()

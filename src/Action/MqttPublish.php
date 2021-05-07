@@ -29,8 +29,7 @@ use Fusio\Engine\Form\ElementFactoryInterface;
 use Fusio\Engine\ParametersInterface;
 use Fusio\Engine\RequestInterface;
 
-//use PhpMqtt\Client\MQTTClient;
-use PhpMqtt\Client\MQTTClient;
+use PhpMqtt\Client\MqttClient;
 
 /**
  * Mqtt
@@ -49,8 +48,18 @@ class MqttPublish extends ActionAbstract
     public function handle(RequestInterface $request, ParametersInterface $configuration, ContextInterface $context)
     {
         $connection = $this->getConnection($configuration);
- 
-        $connection->publish($configuration->get('topic'), $request->get('body'), 0);
+        $topic = $configuration->get('topic');
+        try {
+            $topic = $request->get('topic');
+        } catch (\Exception $e) {}
+
+        $body = $request->get('body');
+
+        $qos = $configuration->get('qos') ?? 0;
+        try {
+            $qos = $request->get('qos');
+        } catch (\Exception $e) {}
+        $connection->publish($topic, $body, $qos);
 
         return $this->response->build(200, [], [
             'success' => true,
@@ -61,13 +70,15 @@ class MqttPublish extends ActionAbstract
     public function configure(BuilderInterface $builder, ElementFactoryInterface $elementFactory)
     {
         $builder->add($elementFactory->newConnection('connection', 'Connection', 'The MQTT connection which should be used'));
-        $builder->add($elementFactory->newInput('topic', 'Topic', 'text', 'The MQTT topic to publish on'));
+        $builder->add($elementFactory->newInput('topic', 'Topic', 'text', 'The MQTT topic to publish on. Can be overridden setting the attribute "topic" on the requests JSON'));
+        $builder->add($elementFactory->newInput('qos', 'QoS', 'number', 'The QoS Value to use. Can be overridden setting the attribute "qos" on the requests JSON'));
     }
 
-    protected function getConnection(ParametersInterface $configuration): MQTTClient
+
+    protected function getConnection(ParametersInterface $configuration): MqttClient
     {
         $connection = $this->connector->getConnection($configuration->get('connection'));
-        if (!$connection instanceof MQTTClient) {
+        if (!$connection instanceof MqttClient) {
             throw new ConfigurationException('Given connection must be a MQTT connection');
         }
 

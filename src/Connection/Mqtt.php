@@ -54,7 +54,7 @@ class Mqtt implements ConnectionInterface, PingableInterface
             ->setPassword($config->get('password') ?: null)
         ;
 
-        $client = new \PhpMqtt\Client\MQTTClient(
+        $client = new \PhpMqtt\Client\MqttClient(
             $config->get('host'),
             $config->get('port') ?: 1883,
             $config->get('clientid'),
@@ -75,7 +75,7 @@ class Mqtt implements ConnectionInterface, PingableInterface
 
     public function ping($connection)
     {
-        if ($connection instanceof \PhpMqtt\Client\MQTTClient) {
+        if ($connection instanceof \PhpMqtt\Client\MqttClient) {
             return $connection->isConnected();
         } else {
             return false;
