@@ -49,9 +49,9 @@ class MqttPublish extends ActionAbstract
     {
         $connection = $this->getConnection($configuration);
         $topic = $request->get('topic') ?? $configuration->get('topic');
-        $body = $request->get('body');
-        $qos = $request->get('qos') ?? $configuration->get('qos');
-        $connection->publish($topic, $body, 0);
+        $body = $request->get('body') ?? '' ;
+        $qos = $request->get('qos') ?? $configuration->get('qos') ?? 0;
+        $connection->publish($topic, $body, $qos);
 
         return $this->response->build(200, [], [
             'success' => true,
