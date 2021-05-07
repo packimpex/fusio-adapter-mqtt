@@ -55,9 +55,8 @@ class MqttPublish extends ActionAbstract
 
         $body = $request->get('body');
 
-        $qos = 0;
+        $qos = $configuration->get('qos') ?? 0;
         try {
-            $qos = $configuration->get('qos');
             $qos = $request->get('qos');
         } catch (\Exception $e) {}
         $connection->publish($topic, $body, $qos);
