@@ -48,9 +48,18 @@ class MqttPublish extends ActionAbstract
     public function handle(RequestInterface $request, ParametersInterface $configuration, ContextInterface $context)
     {
         $connection = $this->getConnection($configuration);
-        $topic = $request->get('topic') ?? $configuration->get('topic');
-        $body = $request->get('body') ?? '' ;
-        $qos = $request->get('qos') ?? $configuration->get('qos') ?? 0;
+        $topic = $configuration->get('topic');
+        try {
+            $topic = $request->get('topic');
+        } catch (Exception $e) {}
+
+        $body = $request->get('body');
+
+        $qos = 0;
+        try {
+            $qos = $configuration->get('qos');
+            $qos = $request->get('qos');
+        } catch (Exception $e) {}
         $connection->publish($topic, $body, $qos);
 
         return $this->response->build(200, [], [
