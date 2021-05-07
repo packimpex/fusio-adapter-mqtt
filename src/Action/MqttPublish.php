@@ -51,7 +51,7 @@ class MqttPublish extends ActionAbstract
         $topic = $configuration->get('topic');
         try {
             $topic = $request->get('topic');
-        } catch (Exception $e) {}
+        } catch (\Exception $e) {}
 
         $body = $request->get('body');
 
@@ -59,7 +59,7 @@ class MqttPublish extends ActionAbstract
         try {
             $qos = $configuration->get('qos');
             $qos = $request->get('qos');
-        } catch (Exception $e) {}
+        } catch (\Exception $e) {}
         $connection->publish($topic, $body, $qos);
 
         return $this->response->build(200, [], [
